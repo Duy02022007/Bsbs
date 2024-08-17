@@ -170,8 +170,8 @@ if bringmob2 ~= v2 then
 v2 = game:GetService("RunService").RenderStepped:Connect(function()
 if bringmob2==false then v2:Disconnect()  end
 game.Workspace["NPC DAMAGE"][quest].HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,5.5,0)
-if quest == "Kaidou" then
-game.Workspace["NPC DAMAGE"][quest].HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,3,-13)
+if quest == "Getou" then
+game.Workspace["Getou"][quest].HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,3,-13)
 elseif quest == "Garou" then
 game.Workspace["NPC DAMAGE"][quest].HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame*CFrame.new(0,6.6,0)
 elseif quest == "Tango" then
