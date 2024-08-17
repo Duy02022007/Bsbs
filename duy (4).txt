@@ -54,7 +54,8 @@ drops:Button("OneShot⭐", function()
 if quest == nil then
 DiscordLib:Notification("Warning","Please Pick Mob","Ok")
 else
-local mob = game:GetService("Workspace")["NPC DAMAGE"][quest][Getou][Cid]
+local mob = game:GetService("Workspace")["NPC DAMAGE"][quest]
+game:GetService("Workspace")["Getou"]["Cid"]
 local boss = mob.HumanoidRootPart
 local players = game.Players
 local localPlayer = players.LocalPlayer
