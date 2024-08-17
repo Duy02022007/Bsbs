@@ -43,7 +43,7 @@ for i, v in pairs(Workspace["NPC DAMAGE"]:GetChildren()) do
 table.insert(questlist, v.Name)
 end
    local drop = drops:Dropdown("Mob lv 2000 > lv 200000+", questlist, function(y)
-for i, v in pairs(game.Workspace["Getou"]["NPC DAMAGE"]:GetChildren()) do
+for i, v in pairs(game.Workspace["NPC DAMAGE"]:GetChildren()) do
 if y == v.Name then
 quest = y
 end
@@ -54,7 +54,7 @@ drops:Button("OneShot⭐", function()
 if quest == nil then
 DiscordLib:Notification("Warning","Please Pick Mob","Ok")
 else
-local mob = game:GetService("Workspace")["Getou"]["NPC DAMAGE"][quest]
+local mob = game:GetService("Workspace")["NPC DAMAGE"][quest]
 local boss = mob.HumanoidRootPart
 local players = game.Players
 local localPlayer = players.LocalPlayer
