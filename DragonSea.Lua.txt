@@ -167,7 +167,7 @@ if dis == nil then
 DiscordLib:Notification("Warning", "Ghi Số Khoảng Cách Aura Trước Khi Dùng", "Ok") 
 else
 while aura do wait(.1)
-for i, v in pairs(game:GetService("Workspace").NPC DAMAGE:GetDescendants()) do
+for i, v in pairs(game:GetService("Workspace").Npc:GetDescendants()) do
 if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude < math.random(dis) then
 pcall(function()
 v.Humanoid.Health = 0
@@ -250,7 +250,38 @@ end
 end
 end
 end
-
+if item() then
+game.StarterGui:SetCore("SendNotification", { 
+                 Title = "TestHub", 
+                 Text = "Hiện Tại Server Có | "..item().Name.." | Nhặt Không?", 
+                 Icon = "", 
+                 Duration = 10,
+        Callback = nut,
+Button1 = "Ok",
+Button2 = "No"
+             })
+else
+game.StarterGui:SetCore("SendNotification", { 
+                 Title = "TestHub", 
+                 Text = "Hiện Tại Server Không Có Item Spawn", 
+                 Icon = "", 
+                 Duration = 2 })
+end
+end)
+drops:Toggle("Grabtools | Nhặt Item Người Chơi Vứt",false, function(I) 
+ getgenv().autograb = I 
+ spawn(function() 
+ while autograb==true do wait() 
+ if not getgenv().autograb then break end 
+ local humanoid = game.Players.LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")         
+ for _, child in ipairs(workspace:GetChildren()) do 
+ if game.Players.LocalPlayer.Character and child:IsA("BackpackItem") and child:FindFirstChild("Handle") then 
+ humanoid:EquipTool(child) 
+ end 
+ end 
+ end 
+ end) 
+ end) 
 local drops = serv:Channel("Farm | Skid")
 local liwp = GetAllWeapon()
 drops:Dropdown("Weapon",liwp,function(i)
@@ -301,7 +332,7 @@ else
 				end
 			else
 				local hasmob = false
-				for k,v in pairs(game.Workspace.NPC DAMAGE:GetChildren()) do 
+				for k,v in pairs(game.Workspace.Npc:GetChildren()) do 
 					if CheckMobLevel(v,CurrentFarmData.Level) and CheckMob(v) and getgenv().af then 
 						hasmob = true
 						local pos = v.HumanoidRootPart.CFrame
@@ -311,7 +342,7 @@ else
 								if getgenv().br then 
 									if not NoBringMob then 
 										
-										for k,v2 in pairs(game.Workspace.NPC DAMAGE:GetChildren()) do 
+										for k,v2 in pairs(game.Workspace.Npc:GetChildren()) do 
 											if CheckMobLevel(v2,CurrentFarmData.Level) and CheckMob(v2) then 
 												
 													v2.HumanoidRootPart.CFrame = pos
@@ -428,7 +459,13 @@ end)
 end
 end
 end)
-
+spawn(function()
+while wait() do
+if getgenv().raid then
+game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild(wp))
+end
+end
+end)
 
 
 
@@ -662,3 +699,131 @@ end)
        Lighting.Outlines = true   
    end   
    end)  
+  btns:Button("Rejoin", function()  
+  local tps = game:GetService("TeleportService")  
+                  local plr = game:GetService("Players").LocalPlayer  
+                  tps:TeleportToPlaceInstance(game.PlaceId, game.JobId, plr)  
+  end)  
+   btns:Button("Reset Character ", function() 
+ game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
+ end) 
+btns:Button("Change Server", function()
+local httprequest = request or http_request or (http and http.request) or (fluxus.request and fluxus) or syn.request
+PlaceId = game.PlaceId
+if httprequest then
+                local servers = {}
+                local req = httprequest({Url = string.format("https://games.roblox.com/v1/games/%d/servers/Public?sortOrder=Desc&limit=100", PlaceId)})
+                local body = game:GetService("HttpService"):JSONDecode(req.Body)
+                if body and body.data then
+                        for i, v in next, body.data do
+                                if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
+                                        table.insert(servers, 1, v.id)
+                                end
+                        end
+                end
+                if #servers > 0 then
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], game:GetService("Players").LocalPlayer)
+                else
+                        DiscordLib:Notification("Warning","Không Tìm Được Server, Hãy Thử Lại.","Ok")
+end
+                end
+end) 
+ btns:Label("Cre Hub:Grabiel Ynu") 
+btns:Textbox("Bug Report", "Type!", true, function(t)
+if t then
+DiscordLib:Notification("Thông Báo","Tin Nhắn Đã Được Gửi.","Ok")
+HttpService = game:GetService("HttpService") 
+ Webhook_URL =  "https://discord.com/api/webhooks/1167083350499020841/Iu6pVDxhv8tUDaf-tR4gCt4W8e9YGYfXF46M52uLN4jQHcfvAUJEJIl8bnY4KKu0WTD0" 
+ local ok = request or http_request or (http and http.request) or syn.request 
+ ok( 
+ { 
+ Url = Webhook_URL, 
+ Method = 'POST', 
+ Headers = { 
+ ['Content-Type'] = 'application/json' 
+ }, 
+ Body = HttpService:JSONEncode({ 
+ ["content"] = "", 
+ ["embeds"] = {{ 
+ ["author"] = { 
+ ["name"] = "", 
+ ["icon"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..game.Players.LocalPlayer.UserId.."&width=100&height=100&format=png" 
+ }, 
+ ["title"] = "🐛"..game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name, 
+ ["description"] = "{ ["..game.Players.LocalPlayer.DisplayName.."] | "..game.Players.LocalPlayer.Name.." } Vừa Báo Lỗi", 
+ ["type"] = "rich", 
+ ["color"] = tonumber(0xffffff), 
+ ["fields"] = { 
+ { 
+ ["name"] = "Script Join:", 
+ ["value"] = "game:GetService('TeleportService'):TeleportToPlaceInstance(game.PlaceId,'"..game.JobId.."')", 
+ ["inline"] = true }, 
+ { 
+ ["name"] = "Người Dùng ID:", 
+ ["value"] = game:GetService("Players").LocalPlayer.UserId, 
+ ["inline"] = true }, 
+ { 
+["name"] = "Nội Dung:", 
+ ["value"] = t, 
+ ["inline"] = true },
+ {
+ ["name"] = "Số tuổi của Account:", 
+ ["value"] = game:GetService("Players").LocalPlayer.AccountAge, 
+ ["inline"] = true } 
+ } 
+ }} 
+ }) 
+ })
+else
+DiscordLib:Notification("Thông Báo","Tin Nhắn Chưa Được Gửi Hãy Thử Lại...","Ok..")
+end
+end)
+  btns:Button("Viet Nam Piece", function()   loadstring(game:HttpGet('https://raw.githubusercontent.com/ginchao/Viet-Nam-Piece/main/Beta'))()    
+    end)  
+ btns:Button("AUT OLD UNIVERSE", function()  
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/ginchao/OUT-OLD-UNIVERSE/main/UNIVERSE%20OLD" ,true))()  
+  end)  
+ btns:Button("Lucky Block Battleground", function() 
+ loadstring(game:HttpGet('https://raw.githubusercontent.com/ginchao/LuckyBlockBattleground/main/HttVeg'))() 
+ end) 
+ btns:Button("Sakura Stand", function() 
+ loadstring(game:HttpGet('https://raw.githubusercontent.com/ginchao/Sakura-Stand/main/ST'))()  
+ end) 
+  btns:Seperator()  
+btns:Button("Hub ESP",function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ginchao/ESP-COPY/main/TY%20FOR%20METHOD"))()
+end)
+    btns:Button("Infinite Yield", function()  
+  loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()  
+    end)  
+  btns:Button("Anti Afk", function()  
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/ginchao/Anti-AFK/main/NO%20KICK" ,true))()  
+  end)  
+  btns:Button("Keyboard", function()  
+
+                         loadstring(game:HttpGet("https://raw.githubusercontent.com/advxzivhsjjdhxhsidifvsh/mobkeyboard/main/main.txt", true))()  
+      end)           
+  btns:Button("FlyV3", function()  
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))() 
+         end)  
+
+  btns:Button("Shift Lock", function()  
+
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/MiniNoobie/ShiftLockx/main/Shiftlock-MiniNoobie",true))()  
+  end) 
+
+  btns:Button("DEX PC", function()  
+  loadstring(game:HttpGet('https://raw.githubusercontent.com/infyiff/backup/main/dex.lua'))()  
+  end)  
+  btns:Button("DEXv4 PC", function()  
+  loadstring(game:GetObjects("rbxassetid://418957341")[1].Source)()  
+  end)  
+  btns:Button("Remote Spy", function()  
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/Hosvile/Refinement/main/Forked/M%3ASimpleSpy%20V3" ,true))()  
+  end)  
+  btns:Button("CCTV Camera", function()  
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/GhostPlayer352/Test4/main/CCTV%20Camera"))();  
+  end)  
+  btns:Button("Invisible X Teleport", function()  
+  loadstring(game:HttpGet('https://raw.githubusercontent.com/0Ben1/fe./dbb6ce6f6cee4f7a5c9e20d7b88e83db2a93bf25/Invisible%20GUI'))()  
+  end) 
