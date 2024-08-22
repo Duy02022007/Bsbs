@@ -20,7 +20,7 @@ drops:Toggle("Kill Aura Humanoid", false, function(t)
 
     while getgenv().aura do
         wait(0.1)
-        for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+        for _, v in pairs(game:GetService("Workspace")("CuteBoss"):GetDescendants()) do
             if v:IsA("Model") and v:FindFirstChild("Humanoid") and v.Name ~= game.Players.LocalPlayer.Name then
                 local playerPos = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart.Position
                 local targetPos = v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart.Position
