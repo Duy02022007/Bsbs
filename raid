@@ -1,5 +1,9 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/natoloe009/SCRIPT-ROBLOX/main/Orion%20KaGa.lua')))()
-
+local DiscordLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/ginchao/Discord-Lib/main/Discord-Lib'))()   
+   local win = DiscordLib:Window("[Khánh Ngọc] ".." ")   
+local per = game:GetService("Players").LocalPlayer.Name
+ DiscordLib:Notification("Premium Stars ⭐ Share","Hello! ".."⭐"..per..".                                              ".." Thanks For Buy Premium ","Ok") 
+ 
+  local serv = win:Server("Khánh Ngọc", "")
 local drops = serv:Channel("Weapon+Fast Attack")  
 local Weaponlist = {}  
   local Weapon = nil  
