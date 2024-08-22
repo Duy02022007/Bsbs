@@ -1,9 +1,6 @@
-local DiscordLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/ginchao/Discord-Lib/main/New'))()   
-   local win = DiscordLib:Window("[Khánh Ngọc] ".." ")   
-local per = game:GetService("Players").LocalPlayer.Name
- DiscordLib:Notification("Premium Stars ⭐ Share","Hello! ".."⭐"..per..".
-local drops = serv:Channel("Weapon+Fast Attack")  
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/natoloe009/SCRIPT-ROBLOX/main/Orion%20KaGa.lua')))()
 
+local drops = serv:Channel("Weapon+Fast Attack")  
 local Weaponlist = {}  
   local Weapon = nil  
   for i, v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do  
