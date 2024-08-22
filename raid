@@ -6,26 +6,35 @@ local per = game:GetService("Players").LocalPlayer.Name
   local serv = win:Server("Khánh Ngọc", "")
 local drops = serv:Channel("Main")  
 local dis = nil
-drops:Textbox("Distance aura","type",true,function(v)
-dis = v
+
+drops:Textbox("Distance aura", "type", true, function(v)
+    dis = tonumber(v) or dis -- Ensure distance is a number
 end)
-drops:Toggle("Kill Aura Humanoid",false,function(t)
-getgenv().aura= t
-if dis == nil then
-DiscordLib:Notification("Warning", "Choose Player to Teleport Player", "Ok") 
-else
-while aura do wait(.1)
-for i, v in pairs(game:GetService("Workspace"):GetDescendants()) do
-if v:FindFirstChild("Humanoid") and v.Name ~= game.Players.LocalPlayer.Name and v.Humanoid.Health > 0 and (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude <= math.random(dis) then
-pcall(function()
-repeat wait()
-v.Humanoid.Health = 0
-v.HumanoidRootPart.CanCollide = false
-sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius", math.huge)
-until v.Humanoid.Health <= 0 or auto == false
-end)
-end
-end
-end
-end
+
+drops:Toggle("Kill Aura Humanoid", false, function(t)
+    getgenv().aura = t
+    if dis == nil then
+        DiscordLib:Notification("Warning", "Choose a distance for the aura", "Ok") 
+        return
+    end
+
+    while getgenv().aura do
+        wait(0.1)
+        for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
+            if v:IsA("Model") and v:FindFirstChild("Humanoid") and v.Name ~= game.Players.LocalPlayer.Name then
+                local playerPos = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                local targetPos = v:FindFirstChild("HumanoidRootPart") and v.HumanoidRootPart.Position
+                if playerPos and targetPos and v.Humanoid.Health > 0 and (playerPos - targetPos).Magnitude <= dis then
+                    pcall(function()
+                        repeat
+                            wait()
+                            v.Humanoid.Health = 0
+                            v.HumanoidRootPart.CanCollide = false
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                        until v.Humanoid.Health <= 0 or not getgenv().aura
+                    end)
+                end
+            end
+        end
+    end
 end)
