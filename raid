@@ -3,14 +3,7 @@ local DiscordLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/gi
 local per = game:GetService("Players").LocalPlayer.Name
  DiscordLib:Notification("Premium Stars ⭐ Share","Hello! ".."⭐"..per..".                                              ".." Thanks For Buy Premium ","Ok") 
  
-local serv = game:GetService("SomeService") -- Replace with your actual service
-local DiscordLib = require(game:GetService("ReplicatedStorage"):WaitForChild("DiscordLib"))
 
--- Variables
-local dis = nil
-local aura = false
-
--- UI setup
 local drops = serv:Channel("Main")
 drops:Textbox("Distance aura", "type", true, function(v)
     dis = tonumber(v) -- Ensure distance is a number
@@ -22,8 +15,7 @@ drops:Toggle("Kill Aura Humanoid", false, function(t)
         DiscordLib:Notification("Warning", "Choose Distance for Kill Aura", "Ok")
         return
     end
-    -- Main loop for Kill Aura
-    while aura do
+   while aura do
         wait(0.1)
         for _, v in pairs(game:GetService("Workspace"):GetDescendants()) do
             local humanoid = v:FindFirstChildOfClass("Humanoid")
